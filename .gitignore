@@ -4,6 +4,6 @@ __pycache__/
 .env
 .env.*
 !.env.example
-.hackathon-runs/
+.project-runs/
 run-artifacts/
 local-runs/

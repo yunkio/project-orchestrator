@@ -6,7 +6,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
-    "initializer", ROOT / "skills/hackathon-orchestrator/scripts/init_workspace.py"
+    "initializer", ROOT / "skills/project-orchestrator/scripts/init_workspace.py"
 )
 MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
@@ -17,7 +17,7 @@ class InitializationTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
-        self.project = self.root / "과제 공백"
+        self.project = self.root / "프로젝트 공백"
         self.project.mkdir()
         (self.project / "README.md").write_text("실제 요구", encoding="utf-8")
         self.output = self.root / "기록 공백"
@@ -33,7 +33,7 @@ class InitializationTests(unittest.TestCase):
         self.assertIn(str((self.project / "README.md").resolve()), content)
         self.assertIn("90분", content)
         self.assertNotIn("INVOCATION_MANIFEST", content)
-        self.assertFalse((self.output / "DEFENSE.md").exists())
+        self.assertFalse((self.output / "HANDOFF.md").exists())
 
     def test_existing_user_answers_remain_byte_identical(self):
         self.output.mkdir()
