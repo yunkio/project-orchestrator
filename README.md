@@ -14,6 +14,12 @@
 
 ## 사용하기
 
+가장 간단한 시작은 저장소 최상위의 [inst.md](inst.md)를 작업 지침으로 지정하는 것입니다. 다음 한 줄이면 저장소 확보, 경로 QnA, 네 단계의 작업과 그래프 인수인계로 이어집니다.
+
+> https://github.com/yunkio/project-orchestrator/blob/main/inst.md 를 읽고 지침에 따라 진행해줘.
+
+GitHub 로그인은 필요하지 않습니다. `inst.md`가 기존 스킬과 참조 문서로 연결하므로, 사용자가 단계마다 파일이나 스킬을 다시 지정할 필요가 없습니다. 필요한 답변은 QNA 문서에서 받으며, 이미 제공한 값은 다시 묻지 않습니다.
+
 스킬은 [`skills/project-orchestrator/`](skills/project-orchestrator/) 폴더 하나로 독립 동작합니다. 하위 참조 문서와 양식을 함께 가져오세요. 별도 Python 패키지나 외부 API는 필요 없습니다. Python 초기화 도구는 선택 사항입니다.
 
 설치 기능이 제공되는 환경에서는 이 저장소의 스킬 폴더를 지정해 설치할 수 있습니다. 저장소 단위로 사용할 때는 해당 폴더를 프로젝트의 `.agents/skills/` 아래에 두는 방식을 지원합니다. 설치 경로나 지원 기능이 다른 환경에서는 그 환경의 허용된 방식으로 `SKILL.md`를 읽게 하면 됩니다. 스킬 때문에 도구 버전이나 설정을 임의 변경하지 않습니다. [공식 스킬 안내](https://learn.chatgpt.com/docs/build-skills)
