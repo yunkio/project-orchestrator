@@ -6,7 +6,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
-    "initializer", ROOT / "skills/project-orchestrator/scripts/init_workspace.py"
+    "initializer", ROOT / "scripts/init_project.py"
 )
 MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
@@ -28,27 +28,26 @@ class InitializationTests(unittest.TestCase):
     def test_creates_utf8_documents_with_explicit_inputs(self):
         paths = self.run_init(time_budget="90분")
         self.assertEqual({path.name for path in paths},
-                         {"QNA.md", "USER_INTENT.md", "REQUIREMENTS.md", "WORKLOG.md", "CHECKLIST.md"})
-        content = (self.output / "WORKLOG.md").read_text(encoding="utf-8")
+                         {"QNA.md", "USER_INTENT.md", "SPEC.md", "CHECKLIST.md"})
+        content = (self.output / "CHECKLIST.md").read_text(encoding="utf-8")
         self.assertIn(str(self.project.resolve()), content)
         self.assertIn(str((self.project / "README.md").resolve()), content)
         self.assertIn("90분", content)
         self.assertNotIn("INVOCATION_MANIFEST", content)
         self.assertFalse((self.output / "HANDOFF.md").exists())
-        self.assertFalse((self.output / "SPEC.md").exists())
+        self.assertTrue((self.output / "SPEC.md").exists())
 
     def test_checklist_is_created_as_unconfirmed_work(self):
         self.run_init()
         content = (self.output / "CHECKLIST.md").read_text(encoding="utf-8")
         rows = [line.split("|") for line in content.splitlines()
-                if line.startswith("| G") and line.split("|")[1].strip()[:2] in
-                {"G0", "G1", "G2", "G3", "G4", "G5", "G6"}]
+                if line.startswith(("| P1-", "| P2-", "| P3-", "| P4-", "| H-"))]
         self.assertTrue(rows)
         self.assertTrue(all(row[3].strip() == "대기" for row in rows))
 
     def test_existing_checklist_alone_blocks_initialization_and_is_preserved(self):
         self.output.mkdir()
-        existing = "# 기존 점검\n| G2-01 | 재검토 | 사용자 기준 변경 |\n".encode("utf-8")
+        existing = "# 기존 점검\n| P3-01 | 재검토 | 사용자 기준 변경 |\n".encode("utf-8")
         (self.output / "CHECKLIST.md").write_bytes(existing)
         with self.assertRaises(ValueError):
             self.run_init()
@@ -85,7 +84,7 @@ class InitializationTests(unittest.TestCase):
         dialogue = self.project / "현업.md"
         dialogue.write_text("질의 기록", encoding="utf-8")
         MODULE.initialize(self.project, self.output, ["https://example.invalid/task"], [str(dialogue)])
-        content = (self.output / "WORKLOG.md").read_text(encoding="utf-8")
+        content = (self.output / "CHECKLIST.md").read_text(encoding="utf-8")
         self.assertIn("https://example.invalid/task", content)
         self.assertIn(str(dialogue.resolve()), content)
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Inst 프로젝트 진행"
+  short_description: "질문과 목적 이해부터 명세·병렬 구현·검증·그래프 설명까지 프로젝트 조율"
+  default_prompt: "$inst로 자료와 목적을 파악하고 나와 소통하며 프로젝트를 진행한 뒤, 결과를 그래프와 상세 설명으로 정리해줘."

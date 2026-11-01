@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Create five run documents without overwriting existing files. Standard library only."""
+"""Create project records without overwriting existing files. Standard library only."""
 
 import argparse
 from pathlib import Path
 from urllib.parse import urlsplit
 
 
-DOCUMENTS = ("QNA.md", "USER_INTENT.md", "REQUIREMENTS.md", "WORKLOG.md", "CHECKLIST.md")
+DOCUMENTS = ("QNA.md", "USER_INTENT.md", "SPEC.md", "CHECKLIST.md")
 
 
 def source_ref(value, project):
@@ -45,9 +45,9 @@ def initialize(project_dir, artifact_dir, sources, stakeholders=(), time_budget=
         manifest.append("  - 미지정 — 없음인지, 별도 질의 채널이 있는지 확인")
     manifest.extend(["", "이 목록은 호출 인자다. 자료 열람·요구 확정·사용자 동의를 의미하지 않는다."])
     marker = "<!-- INVOCATION_MANIFEST -->"
-    if marker not in contents["WORKLOG.md"]:
-        raise ValueError("WORKLOG template is missing its invocation marker")
-    contents["WORKLOG.md"] = contents["WORKLOG.md"].replace(marker, "\n".join(manifest), 1)
+    if marker not in contents["CHECKLIST.md"]:
+        raise ValueError("CHECKLIST template is missing its invocation marker")
+    contents["CHECKLIST.md"] = contents["CHECKLIST.md"].replace(marker, "\n".join(manifest), 1)
     target.mkdir(parents=True, exist_ok=True)
     written = []
     for name, content in contents.items():
