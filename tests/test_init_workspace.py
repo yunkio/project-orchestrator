@@ -27,13 +27,33 @@ class InitializationTests(unittest.TestCase):
 
     def test_creates_utf8_documents_with_explicit_inputs(self):
         paths = self.run_init(time_budget="90분")
-        self.assertEqual({path.name for path in paths}, set(MODULE.DOCUMENTS))
+        self.assertEqual({path.name for path in paths},
+                         {"QNA.md", "USER_INTENT.md", "REQUIREMENTS.md", "WORKLOG.md", "CHECKLIST.md"})
         content = (self.output / "WORKLOG.md").read_text(encoding="utf-8")
         self.assertIn(str(self.project.resolve()), content)
         self.assertIn(str((self.project / "README.md").resolve()), content)
         self.assertIn("90분", content)
         self.assertNotIn("INVOCATION_MANIFEST", content)
         self.assertFalse((self.output / "HANDOFF.md").exists())
+        self.assertFalse((self.output / "SPEC.md").exists())
+
+    def test_checklist_is_created_as_unconfirmed_work(self):
+        self.run_init()
+        content = (self.output / "CHECKLIST.md").read_text(encoding="utf-8")
+        rows = [line.split("|") for line in content.splitlines()
+                if line.startswith("| G") and line.split("|")[1].strip()[:2] in
+                {"G0", "G1", "G2", "G3", "G4", "G5", "G6"}]
+        self.assertTrue(rows)
+        self.assertTrue(all(row[3].strip() == "대기" for row in rows))
+
+    def test_existing_checklist_alone_blocks_initialization_and_is_preserved(self):
+        self.output.mkdir()
+        existing = "# 기존 점검\n| G2-01 | 재검토 | 사용자 기준 변경 |\n".encode("utf-8")
+        (self.output / "CHECKLIST.md").write_bytes(existing)
+        with self.assertRaises(ValueError):
+            self.run_init()
+        self.assertEqual((self.output / "CHECKLIST.md").read_bytes(), existing)
+        self.assertEqual({p.name for p in self.output.iterdir()}, {"CHECKLIST.md"})
 
     def test_existing_user_answers_remain_byte_identical(self):
         self.output.mkdir()

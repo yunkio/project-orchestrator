@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Create four run documents without overwriting existing files. Standard library only."""
+"""Create five run documents without overwriting existing files. Standard library only."""
 
 import argparse
 from pathlib import Path
 from urllib.parse import urlsplit
 
 
-DOCUMENTS = ("QNA.md", "USER_INTENT.md", "REQUIREMENTS.md", "WORKLOG.md")
+DOCUMENTS = ("QNA.md", "USER_INTENT.md", "REQUIREMENTS.md", "WORKLOG.md", "CHECKLIST.md")
 
 
 def source_ref(value, project):
