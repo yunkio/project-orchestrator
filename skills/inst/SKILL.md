@@ -18,8 +18,8 @@ description: 사용자와 문서 QnA로 목적을 확인하고, 명세·계획·
 |---|---|---|
 | QNA.md | 질문 문맥·선택지·실제 답변·해석 | [QNA](assets/QNA.md) |
 | USER_INTENT.md | 별도로 유지하는 현재 목적·이유·우선순위·위임 | [USER_INTENT](assets/USER_INTENT.md) |
-| SPEC.md | 원자료·요구 추적·명세·방법 선택·실행 계획 | [SPEC](assets/SPEC.md) |
-| CHECKLIST.md | 본래 목적·현재 상태·다음 행동·배정·검사·복귀 기록 | [CHECKLIST](assets/CHECKLIST.md) |
+| SPEC.md | 원자료·요구 추적·명세·방법 선택·검사 계획 | [SPEC](assets/SPEC.md) |
+| CHECKLIST.md | 본래 목적·실행 계획·현재 상태·다음 행동·배정·근거·복귀 기록 | [CHECKLIST](assets/CHECKLIST.md) |
 | HANDOFF.md | 실제 결과의 그래프·상세 설명·근거·한계·재현 방법 | [HANDOFF](assets/HANDOFF.md) |
 
 QNA·의도·명세·체크리스트는 준비와 함께 필요한 내용을 채우고, HANDOFF는 실제 결과를 설명할 때 작성한다. 양식 생성은 작업 완료를 뜻하지 않는다. 사용자 편집과 과거 답변의 근거는 보존하고 현재 기준을 문서 상단에 분명히 둔다.
